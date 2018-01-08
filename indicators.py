@@ -46,6 +46,7 @@ def stochastic_oscillator(company, window=14, begin="2000-01-03", end=datetime.d
             if item > high:
                 high = item
         total = 100 * (closes[company][index] - low) / (high - low)
+        
         if index > window:
             oscillators[company][index] = total
         else:
