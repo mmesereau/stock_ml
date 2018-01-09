@@ -6,12 +6,12 @@ import statistics
 import writeFiles
 import pandas as pd
 import constructor
-import network
+from algorithms import network, mlp_regressor
 import numpy as np
 
 
-def nantest():
-    data = constructor.inputs("MSFT")
+def nantest(company):
+    data = constructor.inputs(company)
 
     for index in range(data.shape[0]):
         for column in range(data.shape[1]):
@@ -31,4 +31,4 @@ def nantest():
 #
 # plot.graph([df[40:], boll[40:], rsi[40:], oscillator[40:]])
 
-network.initial_regression_network("MSFT")
+mlp_regressor.perceptron_regressor("BABA")

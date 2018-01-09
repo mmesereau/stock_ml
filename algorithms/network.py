@@ -19,6 +19,11 @@ def initial_regression_network(company, start="2000-01-03", end=datetime.date.to
 
     #split the output data into training and testing data
     output_half = math.floor(output_data.shape[0] / 2)
+    # print("Length problem!", input_half, output_half)
+    # print(input_data.iloc[0])
+    # print(input_data.iloc[-1])
+    # print(output_data.iloc[0])
+    # print(output_data.iloc[-1])
     train_output = output_data[1:output_half]
     test_output = output_data[output_half:-1]
 
