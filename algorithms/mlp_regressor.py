@@ -28,26 +28,30 @@ def perceptron_regressor(company, start="2000-01-03", end=datetime.date.today())
     hidden_layer_sizes = math.ceil(random.random() * 10)
     activation = random.choice(["identity", "logistic", "tanh", "relu"])
     solver = random.choice(["lbfgs", "sgd", "adam"])
+    max_iter = 10000
 
 
     #set up the model
     model = MLPRegressor(hidden_layer_sizes=(hidden_layer_sizes,), activation=activation, solver=solver, alpha=0.0001,
                          batch_size="auto", learning_rate="constant", learning_rate_init=0.01,
-                         power_t=0.5, max_iter=10000, shuffle=False, random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9,
-                         nesterovs_momentum=True, early_stopping=True, validation_fraction=0.1, beta_1=0.9, beta_2=0.999,
+                         power_t=0.5, max_iter=max_iter, shuffle=False, random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9,
+                         nesterovs_momentum=True, early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999,
                          epsilon=1e-08)
 
     model = model.fit(train_data, train_output)
-    if model.score(train_data, train_output) > 0.979:
-        print("R squared on training data: ", model.score(train_data, train_output))
-        print("R squared on test data ", model.score(test_data, test_output))
-        print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
-        print("Tomorrow's actual: ", input_data.iloc[-1][company])
-        print("Tomorrow's prediction: ", model.predict(input_data.iloc[-1:]))
-        if abs(model.predict(input_data.iloc[-2:-1])[0] - input_data.iloc[-1][company]) > 1:
-            perceptron_regressor(company, start, end)
+    if model.n_iter_ < max_iter:
+        if model.score(train_data, train_output) > 0.979:
+            print("R squared on training data: ", model.score(train_data, train_output))
+            print("R squared on test data ", model.score(test_data, test_output))
+            print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
+            print("Tomorrow's actual: ", input_data.iloc[-1][company])
+            print("Tomorrow's prediction: ", model.predict(input_data.iloc[-1:]))
+            if abs(model.predict(input_data.iloc[-2:-1])[0] - input_data.iloc[-1][company]) > 1:
+                perceptron_regressor(company, start, end)
 
+        else:
+            print("Failed attempt: ", model.score(train_data, train_output))
+            print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
+            perceptron_regressor(company, start, end)
     else:
-        print("Failed attempt: ", model.score(train_data, train_output))
-        print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
         perceptron_regressor(company, start, end)

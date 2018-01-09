@@ -6,7 +6,7 @@ Created my first linear model.  This model ultimately has an R^2 of -0.87 for th
 Created a Multi-Layer Perceptron Regression model.  The same three parameters from yesterday's model are being used.  I have found wild success with this model, partially because I have chosen to randomize some parameters for the model (number of hidden layers, activation function and solving method) and then automated running it until I find an acceptable R^2 on the training data.  R^2 seems to max out around 0.979 on the training data, and it often finds an R^2 of 0.999 on the testing data.  This is tremendous!  When I do end up with an R^2 on the testing data, I am able to predict the next day's close within 1.5%, usually undercutting the actual close.  
 
 My next steps will be as follows:
-1.  In it's current form, the automation of the network can break when it doesn't converge within the maximum number of iterations.  I will want to change the network so that it will adapt to this glitch and simply ignores it, and continues on the automation.
+1.  In it's current form, the automation of the network can break when it doesn't converge within the maximum number of iterations.  I will want to change the network so that it will adapt to this glitch and simply ignores it, and continues on the automation.   *UPDATE:* This turned out to be super easy.
 
 2.  I will want to get up-to-date information on EVERY company on the S&P 500 and run this network on all of them.  I will then keep track of my accuracy regarding top gainers and top losers.
 
