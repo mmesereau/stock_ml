@@ -11,3 +11,18 @@ My next steps will be as follows:
 2.  I will want to get up-to-date information on EVERY company on the S&P 500 and run this network on all of them.  I will then keep track of my accuracy regarding top gainers and top losers.
 
 3.  I will, of course, want to add more parameters.  There are plenty of technical indicators out there, and I'm currently using two.  I can do better.
+
+1/9/2018 Update:
+I added get_companies.py to track which companies are on the S&P 500.  I can then run writeFiles.py on each company and write them to the companies folder.  
+
+Here's the direction I'm going to go in now:  
+
+My next step is to wrap all of this in a Django application that can communicate with a SQL database.  Using this, I will store company data (including all of the information currently in the CSV's, as well as things like industry), parameters that produce effective models, and the effective models themselves.  
+
+Additionally, I will make a new classification algorithm to identify the most effective algorithms to use to produce good predictions.  Essentially, I'm going to nest a neural network inside another neural network.  The outside network will do the work of picking ideal parameters for me.
+
+Using additional input parameters (which in this case are technical indicators), I will tweak the model to be more accurate.  This will also give me an idea of which technical indicators are more effective and which ones are not.
+
+Finally, I will make a master model that can apply to all companies.  Currently, every model I make only applies to a single company.  By generalizing, I will be able to avoid overfitting.
+
+On the horizon, I hope to implement additional models such as a SVM or a HMM.  The more models, the more accurate.  I can then wrap the outputs of each of these models in a brand new model to identify the weights of each.

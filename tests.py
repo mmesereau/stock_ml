@@ -6,6 +6,7 @@ import statistics
 import writeFiles
 import pandas as pd
 import constructor
+import get_companies
 from algorithms import network, mlp_regressor
 import numpy as np
 
@@ -31,4 +32,7 @@ def nantest(company):
 #
 # plot.graph([df[40:], boll[40:], rsi[40:], oscillator[40:]])
 
-mlp_regressor.perceptron_regressor("BABA")
+mlp_regressor.perceptron_regressor("MSFT")
+# companies = get_companies.companies()
+# for i in constants.companies:
+#     writeFiles.writeFile(i)
