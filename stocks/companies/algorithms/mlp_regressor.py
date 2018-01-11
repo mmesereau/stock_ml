@@ -1,6 +1,6 @@
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import mean_squared_error, r2_score
-import constructor
+from .. import constructor
 import datetime
 import math
 import numpy
@@ -9,7 +9,7 @@ import random
 warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
 
 
-def perceptron_regressor(company, start="2000-01-03", end=datetime.date.today()):
+def perceptron_regressor(company, hidden_layer_sizes=5, activation="relu", solver="adam", max_iter=400, start="2000-01-03", end=datetime.date.today()):
     #import data
     input_data = constructor.inputs(company)
     output_data = constructor.tomorrow_close(company)
@@ -24,12 +24,6 @@ def perceptron_regressor(company, start="2000-01-03", end=datetime.date.today())
     train_output = output_data[2:output_half]
     test_output = output_data[output_half:-2]
 
-    #randomize some parameters to identify effectiveness
-    hidden_layer_sizes = math.ceil(random.random() * 10)
-    activation = random.choice(["identity", "logistic", "tanh", "relu"])
-    solver = random.choice(["lbfgs", "sgd", "adam"])
-    max_iter = 10000
-
 
     #set up the model
     model = MLPRegressor(hidden_layer_sizes=(hidden_layer_sizes,), activation=activation, solver=solver, alpha=0.0001,
@@ -40,18 +34,19 @@ def perceptron_regressor(company, start="2000-01-03", end=datetime.date.today())
 
     model = model.fit(train_data, train_output)
     if model.n_iter_ < max_iter:
-        if model.score(train_data, train_output) > 0.979:
-            print("R squared on training data: ", model.score(train_data, train_output))
-            print("R squared on test data ", model.score(test_data, test_output))
-            print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
-            print("Tomorrow's actual: ", input_data.iloc[-1][company])
-            print("Tomorrow's prediction: ", model.predict(input_data.iloc[-1:]))
-            if abs(model.predict(input_data.iloc[-2:-1])[0] - input_data.iloc[-1][company]) > 1:
-                perceptron_regressor(company, start, end)
-
-        else:
-            print("Failed attempt: ", model.score(train_data, train_output))
-            print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
-            perceptron_regressor(company, start, end)
+        return [model.score(train_data, train_output), model.score(test_data, test_output)]
+        # if model.score(train_data, train_output) > 0.979:
+        #     print("R squared on training data: ", model.score(train_data, train_output))
+        #     print("R squared on test data ", model.score(test_data, test_output))
+        #     print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
+        #     print("Tomorrow's actual: ", input_data.iloc[-1][company])
+        #     print("Tomorrow's prediction: ", model.predict(input_data.iloc[-1:]))
+        #     if abs(model.predict(input_data.iloc[-2:-1])[0] - input_data.iloc[-1][company]) > 1:
+        #         perceptron_regressor(company, start, end)
+        #
+        # else:
+        #     print("Failed attempt: ", model.score(train_data, train_output))
+        #     print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
+        #     perceptron_regressor(company, start, end)
     else:
         perceptron_regressor(company, start, end)

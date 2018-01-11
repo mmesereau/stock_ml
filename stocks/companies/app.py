@@ -4,6 +4,8 @@ from . import dataframe as dtf
 from . import statistics as st
 from . import writeFiles as wr
 from . import get_companies as gc
+# from . import algorithms
+from .algorithms import mlp_regressor as mlp
 
 
 def get_companies():
@@ -12,6 +14,9 @@ def get_companies():
 def writeFile(name):
     wr.writeFile(name)
     return True
+
+def generate_model(company, hidden_layer_sizes=5, activation="relu", solver="adam", max_iter=400):
+    return mlp.perceptron_regressor(company, hidden_layer_sizes, activation, solver, max_iter)
 
 # MSFT_data = dtf.get_data(["MSFT"], "2017-01-01")
 # rolling_MSFT_mean = st.rolling_mean("MSFT", 20, "2017-01-01")

@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('set/', views.set, name='set'),
-    path('<int:company_id>/', views.get, name='get'),
+    path('get/<int:company_id>/', views.get, name='get'),
+    path('test_model/<int:company_id>/', views.generate_sample_of_models, name="sample"),
     path('', views.index, name='index'),
 ]
