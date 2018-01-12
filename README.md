@@ -1,8 +1,8 @@
 Backlog:
 
-I will be using the pickle tool (http://scikit-learn.org/stable/modules/model_persistence.html) to persist my models.  I expect around 550 Multi-Layer Perceptron models by the end, so I'll want to be able to persist at scale.
+It turns out that the daily update takes quite some time.  I will want to run the process as an overnight process, so I will have to have a perpetually running server.  I don't want this to be cloud hosted, so I will need to acquire a local server.  I may at some point need to find an alternative data source, as Alpha Vantage varies from near-instantaneous response times to tens of seconds response times.  With 500 API requests made every day, the response time makes a large difference.
 
-I will make a new classification algorithm to identify the most effective algorithms to use to produce good predictions.  Essentially, I'm going to nest a neural network inside another neural network.  The outside network will do the work of picking ideal parameters for me.
+I will have the overnight process first update the csv file for every company to show today's information.  I will compare today's actual close to today's prediction so that I can track the accuracy of my model.  I will use today's information to make a prediction for tomorrow's close.  I will use today's information as additional training data on all of my models.
 
 Using additional input parameters (which in this case are technical indicators), I will tweak the model to be more accurate.  This will also give me an idea of which technical indicators are more effective and which ones are not.
 
@@ -25,3 +25,9 @@ I added get_companies.py to track which companies are on the S&P 500.  I can the
 
 1/10 Update:
 I have wrapped the application in the initial Django framework.  I will be using this to process incoming HTTP requests and communicate with the SQL database that has been set up.  I have collected the CSV data for all S&P 500 companies (and added them to the .gitignore file to limit the size of the git commits) and also added the companies to the database, with fields "name", "ticker" and "industry".  I also now have the framework to turn this into a web-based application if I desire to do so down the line.
+
+1/11 Update:
+I wrote an API endpoint that runs through 100 randomized models for each company and stores the model parameters, training R^2 and testing R^2.  An average model takes about 10 seconds to train, but I'm doing 100 test models for 500 companies, which comes out to 500,000 seconds or 5.8 days.  This is highly impractical.  My new approach will be to identify successful models using randomized parameters and R^2 measurements, then persist one model per company using the pickle tool.
+
+1/11 Update (II):
+I wrote the endpoint described above and edited the existing MLP regressor to then pickle the best model that the function makes.  I also wrote the update_csv endpoint, which will find any dates within the last 100 trading days and add them to the csv files.  The update_csv endpoint will be part of my overnight process.  Tomorrow, I will create models for every company, as right now I only have a model for one.

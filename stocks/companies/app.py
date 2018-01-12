@@ -15,8 +15,13 @@ def writeFile(name):
     wr.writeFile(name)
     return True
 
-def generate_model(company, hidden_layer_sizes=5, activation="relu", solver="adam", max_iter=400):
-    return mlp.perceptron_regressor(company, hidden_layer_sizes, activation, solver, max_iter)
+def generate_model(company):
+    mlp.perceptron_regressor(company)
+    return True
+
+def update_csv(company):
+    wr.update_csv(company)
+    return True
 
 # MSFT_data = dtf.get_data(["MSFT"], "2017-01-01")
 # rolling_MSFT_mean = st.rolling_mean("MSFT", 20, "2017-01-01")

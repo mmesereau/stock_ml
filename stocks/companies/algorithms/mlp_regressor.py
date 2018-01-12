@@ -6,10 +6,18 @@ import math
 import numpy
 import warnings
 import random
+import pandas
+import pickle
 warnings.filterwarnings(action="ignore", module="scipy", message="^internal gelsd")
 
 
-def perceptron_regressor(company, hidden_layer_sizes=5, activation="relu", solver="adam", max_iter=400, start="2000-01-03", end=datetime.date.today()):
+def perceptron_regressor(company, start="2000-01-03", end=datetime.date.today()):
+    #randomize some parameters to identify effectiveness
+    hidden_layer_sizes = math.ceil(random.random() * 10)
+    activation = random.choice(["identity", "logistic", "tanh", "relu"])
+    solver = random.choice(["lbfgs", "sgd", "adam"])
+    max_iter = 400
+
     #import data
     input_data = constructor.inputs(company)
     output_data = constructor.tomorrow_close(company)
@@ -26,7 +34,7 @@ def perceptron_regressor(company, hidden_layer_sizes=5, activation="relu", solve
 
 
     #set up the model
-    model = MLPRegressor(hidden_layer_sizes=(hidden_layer_sizes,), activation=activation, solver=solver, alpha=0.0001,
+    model = MLPRegressor(hidden_layer_sizes=hidden_layer_sizes, activation=activation, solver=solver, alpha=0.0001,
                          batch_size="auto", learning_rate="constant", learning_rate_init=0.01,
                          power_t=0.5, max_iter=max_iter, shuffle=False, random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9,
                          nesterovs_momentum=True, early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999,
@@ -34,19 +42,23 @@ def perceptron_regressor(company, hidden_layer_sizes=5, activation="relu", solve
 
     model = model.fit(train_data, train_output)
     if model.n_iter_ < max_iter:
-        return [model.score(train_data, train_output), model.score(test_data, test_output)]
-        # if model.score(train_data, train_output) > 0.979:
-        #     print("R squared on training data: ", model.score(train_data, train_output))
-        #     print("R squared on test data ", model.score(test_data, test_output))
-        #     print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
-        #     print("Tomorrow's actual: ", input_data.iloc[-1][company])
-        #     print("Tomorrow's prediction: ", model.predict(input_data.iloc[-1:]))
-        #     if abs(model.predict(input_data.iloc[-2:-1])[0] - input_data.iloc[-1][company]) > 1:
-        #         perceptron_regressor(company, start, end)
-        #
-        # else:
-        #     print("Failed attempt: ", model.score(train_data, train_output))
-        #     print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
-        #     perceptron_regressor(company, start, end)
+        if model.score(train_data, train_output) > 0.979:
+            if model.score(test_data, test_output) > model.score(train_data, train_output):
+                filename = 'companies/ml_models/' + company + '.sav'
+                pickle.dump(model, open(filename, 'wb'))
+                #TODO: Pickle goes here
+            # print("R squared on training data: ", model.score(train_data, train_output))
+            # print("R squared on test data ", model.score(test_data, test_output))
+            # print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
+            # print("Tomorrow's actual: ", input_data.iloc[-1][company])
+            # print("Tomorrow's prediction: ", model.predict(input_data.iloc[-1:]))
+            # if abs(model.predict(input_data.iloc[-2:-1])[0] - input_data.iloc[-1][company]) > 1:
+            #     perceptron_regressor(company, start, end)
+            else:
+                perceptron_regressor(company, start, end)
+        else:
+            # print("Failed attempt: ", model.score(train_data, train_output))
+            # print("Statistics: ", hidden_layer_sizes, " hidden layers; Activation function: ", activation, " Solver: ", solver)
+            perceptron_regressor(company, start, end)
     else:
         perceptron_regressor(company, start, end)

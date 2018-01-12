@@ -7,7 +7,7 @@ def get_data(symbols, start_date="2000-01-03", end_date=datetime.date.today(), c
     dates = pd.date_range(start_date, end_date)
     df1 = pd.DataFrame(index=dates)
     for item in symbols:
-        df_temp = pd.read_csv("companies/" + item + ".csv", index_col="timestamp",
+        df_temp = pd.read_csv("companies/companies/" + item + ".csv", index_col="timestamp",
                                 parse_dates=True, usecols=["timestamp", column],
                                 na_values=['nan']).rename(columns={"adjusted_close": item})
         df1 = df1.join(df_temp, how="inner")
