@@ -44,6 +44,23 @@ def update_csv(company):
         file_to_update.write(str(item))
     return True
 
+def clean(company):
+    try:
+        existing_file = open("companies/companies/" + company + ".csv", "r")
+        existing_data = existing_file.readlines()
+        existing_file.close()
+        while "timestamp" not in existing_data[0]:
+            existing_data = existing_data[1:]
+        new_file = open("companies/companies/" + company + ".csv", "w")
+        for item in existing_data:
+            new_file.write(str(item))
+        new_file.close()
+        return True
+    except:
+        writeFile(company)
+        return True
+
+
     # for item in response:
     #     print(item)
     # file = open("companies/companies/" + company + ".csv", "w")

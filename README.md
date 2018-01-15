@@ -31,3 +31,7 @@ I wrote an API endpoint that runs through 100 randomized models for each company
 
 1/11 Update (II):
 I wrote the endpoint described above and edited the existing MLP regressor to then pickle the best model that the function makes.  I also wrote the update_csv endpoint, which will find any dates within the last 100 trading days and add them to the csv files.  The update_csv endpoint will be part of my overnight process.  Tomorrow, I will create models for every company, as right now I only have a model for one.
+
+1/14 Update:
+I have generated the models.  Most of them (at least 9 out of 10) were generated with an R^2 of over .99 on testing data.  Some were generated with a much lower testing R^2 (more like 0.6, which is basically useless), and some encountered errors altogether (breaking when attempting to calculate R^2 for either testing or training data).  The models that survived have been saved using the pickle plugin.  
+I have written an endpoint to use a model to make a prediction for the future.  I have also written an endpoint to return the actual close for a company on a date.  The framework is in place for an endpoint to retrain the model with today's data, but that has not been completed yet.

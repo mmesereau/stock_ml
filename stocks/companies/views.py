@@ -36,3 +36,20 @@ def update_csv(request, company_id):
     print(company.ticker)
     app.update_csv(company.ticker)
     return HttpResponse("CSV Updated")
+
+def clean(request, company_id):
+    company = Company.objects.get(id=company_id)
+    app.clean(company.ticker)
+    return HttpResponse("CSV Updated")
+
+def predict(request, company_id):
+    company = Company.objects.get(id=company_id)
+    prediction = app.use_regressor(company.ticker)
+    print(prediction)
+    return HttpResponse(prediction)
+
+def actual(request, company_id, date):
+    company = Company.objects.get(id=company_id)
+    actual = app.actual(company.ticker, date)
+    print(actual)
+    return HttpResponse(actual)

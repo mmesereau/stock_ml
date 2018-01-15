@@ -10,10 +10,11 @@ def get_data(symbols, start_date="2000-01-03", end_date=datetime.date.today(), c
         df_temp = pd.read_csv("companies/companies/" + item + ".csv", index_col="timestamp",
                                 parse_dates=True, usecols=["timestamp", column],
                                 na_values=['nan']).rename(columns={"adjusted_close": item})
-        df1 = df1.join(df_temp, how="inner")
+        if len(symbols) > 1:
+            df1 = df1.join(df_temp, how="inner")
+        else:
+            df1 = df_temp
     return df1
-
-
 
 def slicing_data(dataframe, start, end, companies):
     return dataframe.ix[start:end, companies]
