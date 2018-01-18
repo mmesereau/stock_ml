@@ -35,3 +35,6 @@ I wrote the endpoint described above and edited the existing MLP regressor to th
 1/14 Update:
 I have generated the models.  Most of them (at least 9 out of 10) were generated with an R^2 of over .99 on testing data.  Some were generated with a much lower testing R^2 (more like 0.6, which is basically useless), and some encountered errors altogether (breaking when attempting to calculate R^2 for either testing or training data).  The models that survived have been saved using the pickle plugin.  
 I have written an endpoint to use a model to make a prediction for the future.  I have also written an endpoint to return the actual close for a company on a date.  The framework is in place for an endpoint to retrain the model with today's data, but that has not been completed yet.
+
+1/17 Update:
+I have written the whole overnight process and run it twice.  The results of the predictions are underwhelming.  I will continue to refine my models, one particular possibility is to have the output as the percent change rather than the trading value, since that is what I'm ultimately after anyways, and this approach will limit the values to closer to realistic results.

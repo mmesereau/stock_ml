@@ -61,5 +61,5 @@ def perceptron_regressor(company, start="2000-01-03", end=datetime.date.today(),
                 filename = 'companies/ml_models/' + company + '.sav'
                 pickle.dump(model, open(filename, 'wb'))
                 print(trainr2, testr2)
-                return True
+                return testr2
     return perceptron_regressor(company, start, end, tries + 1, max(max_trainr2, trainr2), max(max_testr2, testr2), fails)

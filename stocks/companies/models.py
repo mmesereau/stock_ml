@@ -8,14 +8,13 @@ class Company(models.Model):
 
 class Model(models.Model):
     company_id = models.IntegerField(default=0)
-    hidden_layer_sizes = models.IntegerField(default=0)
-    activation = models.CharField(max_length=200)
-    solver = models.CharField(max_length=200)
-    train_rsquared = models.FloatField(default=0)
     test_rsquared = models.FloatField(default=0)
-    date = models.DateTimeField('date created')
+    date = models.CharField(max_length=200)
 
 class Predictions(models.Model):
     company_id = models.IntegerField(default=0)
-    date = models.DateTimeField('prediction for this date')
+    date = models.CharField(max_length=200)
     prediction = models.FloatField(default=0)
+    actual = models.FloatField(default=0)
+    yesterday = models.FloatField(default=0)
+    accuracy = models.FloatField(default=0)

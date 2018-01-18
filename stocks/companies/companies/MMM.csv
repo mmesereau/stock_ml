@@ -1,4 +1,8 @@
 timestamp,open,high,low,close,adjusted_close,volume,dividend_amount,split_coefficient
+2018-01-17,246.8500,248.5300,245.8000,248.1100,248.1100,2440044,0.0000,1.0000
+<!DOCTYPE html>\n\t<html>\n\t  <head>\n\t\t<meta name="viewport" content="width=device-width, initial-scale=1">\n\t\t<meta charset="utf-8">\n\t\t<title>Application Error</title>\n\t\t<style media="screen">\n\t\t  html,body,iframe {\n\t\t\tmargin: 0;\n\t\t\tpadding: 0;\n\t\t  }\n\t\t  html,body {\n\t\t\theight: 100%;\n\t\t\toverflow: hidden;\n\t\t  }\n\t\t  iframe {\n\t\t\twidth: 100%;\n\t\t\theight: 100%;\n\t\t\tborder: 0;\n\t\t  }\n\t\t</style>\n\t  </head>\n\t  <body>\n\t\t<iframe src="//www.herokucdn.com/error-pages/application-error.html"></iframe>\n\t  </body>\n\t</html>
+2018-01-16,245.3000,247.1900,243.8300,244.7400,244.7400,2411131,0.0000,1.0000
+2018-01-12,243.0700,246.0000,242.5000,244.4700,244.4700,1974254,0.0000,1.0000
 2018-01-11,240.7400,241.8000,239.7500,241.4600,241.4600,742258,0.0000,1.0000
 2018-01-10,241.0000,242.5700,240.0300,241.1400,241.1400,1640853,0.0000,1.0000
 2018-01-09,239.6000,241.7845,239.3400,241.2800,241.2800,1695114,0.0000,1.0000

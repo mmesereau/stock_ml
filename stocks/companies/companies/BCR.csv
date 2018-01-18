@@ -1,4 +1,6 @@
 timestamp,open,high,low,close,adjusted_close,volume,dividend_amount,split_coefficient
+2018-01-16,0.0000,0.0000,0.0000,331.2400,331.2400,0,0.0000,1.0000
+{\n    "Error Message": "Invalid API call. Please retry or visit the documentation (https://www.alphavantage.co/documentation/) for TIME_SERIES_DAILY_ADJUSTED."\n}
 2017-12-29,331.2400,331.2400,331.2400,331.2400,331.2400,0,0.0000,1.0000
 2017-12-28,333.4900,334.0300,331.2400,331.2400,331.2400,4655665,0.0000,1.0000
 2017-12-27,333.2000,333.2900,332.5600,333.1900,333.1900,423705,0.0000,1.0000

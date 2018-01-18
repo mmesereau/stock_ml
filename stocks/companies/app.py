@@ -10,6 +10,7 @@ from . import constructor
 from .algorithms import mlp_regressor as mlp
 from .algorithms import update_regressor as update
 from .algorithms import use_regressor as use
+from .algorithms import get_model_accuracy as accuracy
 
 
 def get_companies():
@@ -20,8 +21,7 @@ def writeFile(name):
     return True
 
 def generate_model(company):
-    mlp.perceptron_regressor(company)
-    return True
+    return mlp.perceptron_regressor(company)
 
 def update_csv(company):
     wr.update_csv(company)
@@ -31,18 +31,30 @@ def clean(company):
     wr.clean(company)
     return True
 
-def update_regressor(company, start=datetime.date.today()-datetime.timedelta(1), end=datetime.date.today()):
-    data = constructor.inputs(company,start, end)
-    update.update(company, data)
+def update_regressor(company, start="2000-01-03", end=datetime.date.today()):
+    data = constructor.inputs(company,start, end).iloc[1:2].as_matrix()
+    output = [actual(company)]
+    update.update(company, data, output)
     return True
 
 def use_regressor(company, start=datetime.date.today()-datetime.timedelta(1), end=datetime.date.today()):
-    data = constructor.inputs(company, start, end).iloc[0:1]
-    return use.use(company, data)
+    data = constructor.inputs(company, start, end).iloc[0:1].as_matrix()
+    output = use.use(company, data)
+    prevClose = prevDay(company, datetime.date.today())
+    return [output[0], prevClose]
 
-def actual(company, date):
+def actual(company):
     full = dtf.get_data([company])
-    return full[company].loc[date][0]
+    return full[company][0]
+
+
+def prevDay(company, date):
+    full = dtf.get_data([company])
+    return full[company].as_matrix()[0]
+
+def get_model_accuracy(company):
+    return accuracy.get_accuracy(company)
+
 # MSFT_data = dtf.get_data(["MSFT"], "2017-01-01")
 # rolling_MSFT_mean = st.rolling_mean("MSFT", 20, "2017-01-01")
 # rolling_MSFT_std = st.rolling_standard_deviation("MSFT", 20, "2017-01-01")
