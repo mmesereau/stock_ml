@@ -16,3 +16,8 @@ def tomorrow_close (company, begin="2000-01-03", end=datetime.date.today()):
     df = dataframe.get_data([company])
     df.columns = ["Tomorrow's Close"]
     return df.shift(-1)[20:]
+
+def percent_gain(company, begin="2000-01-03", end=datetime.date.today()):
+    df = dataframe.get_data([company])
+    df.columns = ["Tomorrow Percent Gain"]
+    return (df.shift(-1)[20:] - df[20:]) / df[20:] * 100

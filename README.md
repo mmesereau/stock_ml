@@ -38,3 +38,6 @@ I have written an endpoint to use a model to make a prediction for the future.  
 
 1/17 Update:
 I have written the whole overnight process and run it twice.  The results of the predictions are underwhelming.  I will continue to refine my models, one particular possibility is to have the output as the percent change rather than the trading value, since that is what I'm ultimately after anyways, and this approach will limit the values to closer to realistic results.
+
+1/19 Update:
+Predictions continue to be underwhelming.  I have created a model where the output as percent change, and R^2 measurements have thus far been unsuccessful.  I will need to give the model more information.
